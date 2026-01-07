@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Familienfreundliche Tagesausflüge Niederlande</title>
 
+<!-- Leaflet CSS & JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -19,57 +20,73 @@ html, body { height: 100%; margin: 0; }
 #map { height: 100%; }
 </style>
 </head>
-
 <body>
 <div id="map"></div>
 
 <script>
+// Karte zentrieren
 var map = L.map('map').setView([52.0, 4.5], 8);
 
+// OpenStreetMap Tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
  attribution: '© OpenStreetMap'
 }).addTo(map);
 
-// Marker Icons
-function icon(color, icon) {
+// Funktion für Marker-Icons
+function icon(color, faIcon) {
  return L.AwesomeMarkers.icon({
-   icon: icon,
+   icon: faIcon,
    markerColor: color,
    prefix: 'fa'
  });
 }
 
-// 🦁 Zoos & Tiere
-L.marker([51.928, 4.4489], {icon: icon('green','paw')})
-.addTo(map)
-.bindPopup("<b>Diergaarde Blijdorp (Rotterdam)</b><br>Großer, moderner Zoo mit viel Platz, Spielplätzen und Kinderwagen-freundlichen Wegen. Ideal für einen ganzen Tag.");
+// =====================
+// Marker nach Kategorien
+// =====================
 
-// 🎡 Attraktionen & Erlebnisse
-L.marker([52.0981, 4.296], {icon: icon('orange','star')})
-.addTo(map)
-.bindPopup("<b>Madurodam (Den Haag)</b><br>Mini-Holland zum Staunen! Viele Knöpfe zum Mitmachen – perfekt auch für kleine Kinder.");
+// 🦁 Zoos & Tiere (grün)
+var zoos = [
+ {coords:[51.928, 4.4489], name:"Diergaarde Blijdorp (Rotterdam)", desc:"Moderner Zoo mit viel Platz, Spielplätzen und kinderwagenfreundlichen Wegen."},
+ {coords:[52.3667, 4.9147], name:"Artis Zoo (Amsterdam)", desc:"Überschaubarer Zoo mitten in der Stadt – gut für kürzere Besuche mit kleinen Kindern."}
+];
+zoos.forEach(function(place){
+ L.marker(place.coords, {icon: icon('green','paw')})
+  .addTo(map)
+  .bindPopup("<b>"+place.name+"</b><br>"+place.desc);
+});
 
-// 🚤 Stadt & Entdecken
-L.marker([52.3731, 4.8922], {icon: icon('purple','ship')})
-.addTo(map)
-.bindPopup("<b>Grachtenfahrt Amsterdam</b><br>Entspannte Bootstour – Kinder können schauen, Eltern durchatmen. Auch mit Buggy gut machbar.");
+// 🎡 Attraktionen & Erlebnisse (orange)
+var attractions = [
+ {coords:[52.0981, 4.296], name:"Madurodam (Den Haag)", desc:"Mini-Holland zum Staunen! Viele Knöpfe zum Mitmachen – perfekt für kleine Kinder."},
+ {coords:[52.1125, 4.275], name:"De Pier Scheveningen", desc:"Meer, Weite & viel zu sehen. Perfekt zum Spazieren, Eis essen und Toben."}
+];
+attractions.forEach(function(place){
+ L.marker(place.coords, {icon: icon('orange','star')})
+  .addTo(map)
+  .bindPopup("<b>"+place.name+"</b><br>"+place.desc);
+});
 
-// 🍽️ Essen & Pausen
-L.marker([51.9208, 4.4818], {icon: icon('blue','cutlery')})
-.addTo(map)
-.bindPopup("<b>Markthal Rotterdam</b><br>Große Auswahl an Essen, viel Platz und spannend für Kinder durch Farben & Gerüche.");
+// 🚤 Stadt & Entdecken (lila)
+var city = [
+ {coords:[52.3731, 4.8922], name:"Grachtenfahrt Amsterdam", desc:"Entspannte Bootstour – Kinder können schauen, Eltern durchatmen. Auch mit Buggy gut machbar."}
+];
+city.forEach(function(place){
+ L.marker(place.coords, {icon: icon('purple','ship')})
+  .addTo(map)
+  .bindPopup("<b>"+place.name+"</b><br>"+place.desc);
+});
 
-L.marker([52.379, 4.9001], {icon: icon('blue','birthday-cake')})
-.addTo(map)
-.bindPopup("<b>Pancakes Amsterdam</b><br>Pfannkuchen gehen immer! Sehr kinderfreundlich, viele Varianten, kurze Wartezeiten.");
-
-L.marker([52.3667, 4.9147], {icon: icon('green','paw')})
-.addTo(map)
-.bindPopup("<b>Artis Zoo (Amsterdam)</b><br>Überschaubarer Zoo mitten in der Stadt – gut für kürzere Besuche mit kleinen Kindern.");
-
-L.marker([52.1125, 4.275], {icon: icon('orange','sun-o')})
-.addTo(map)
-.bindPopup("<b>De Pier Scheveningen</b><br>Meer, Weite & viel zu sehen. Perfekt zum Spazieren, Eis essen und Toben.");
+// 🍽️ Essen & Pausen (blau)
+var food = [
+ {coords:[51.9208, 4.4818], name:"Markthal Rotterdam", desc:"Große Auswahl an Essen, viel Platz, spannend für Kinder durch Farben & Gerüche."},
+ {coords:[52.379, 4.9001], name:"Pancakes Amsterdam", desc:"Pfannkuchen gehen immer! Sehr kinderfreundlich, viele Varianten, kurze Wartezeiten."}
+];
+food.forEach(function(place){
+ L.marker(place.coords, {icon: icon('blue','cutlery')})
+  .addTo(map)
+  .bindPopup("<b>"+place.name+"</b><br>"+place.desc);
+});
 
 </script>
 </body>
