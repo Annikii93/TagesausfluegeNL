@@ -1,368 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_d634f5ff64d19232c4e28a6a1b4cace8 {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-            </style>
-        
+<meta charset="UTF-8">
+<title>Familienfreundliche Tagesausflüge Niederlande</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+<style>
+html, body { height: 100%; margin: 0; }
+#map { height: 100%; }
+</style>
 </head>
+
 <body>
-    
-    
-            <div class="folium-map" id="map_d634f5ff64d19232c4e28a6a1b4cace8" ></div>
-        
-</body>
+<div id="map"></div>
+
 <script>
-    
-    
-            var map_d634f5ff64d19232c4e28a6a1b4cace8 = L.map(
-                "map_d634f5ff64d19232c4e28a6a1b4cace8",
-                {
-                    center: [52.0, 4.5],
-                    crs: L.CRS.EPSG3857,
-                    zoom: 8,
-                    zoomControl: true,
-                    preferCanvas: false,
-                }
-            );
+var map = L.map('map').setView([52.0, 4.5], 8);
 
-            
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+ attribution: '© OpenStreetMap'
+}).addTo(map);
 
-        
-    
-            var tile_layer_b77fe1f0db90b37ab16bb55bdd9c67f5 = L.tileLayer(
-                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var marker_14df51f78d89b74ee61308b04afac870 = L.marker(
-                [51.928, 4.4489],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_b3b1cffe3bb8d5811d233473e20b92d7 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
-            );
-            marker_14df51f78d89b74ee61308b04afac870.setIcon(icon_b3b1cffe3bb8d5811d233473e20b92d7);
-        
-    
-        var popup_02ee9c3d1202dfca73781bf3db5229a3 = L.popup({"maxWidth": "100%"});
+// Marker Icons
+function icon(color, icon) {
+ return L.AwesomeMarkers.icon({
+   icon: icon,
+   markerColor: color,
+   prefix: 'fa'
+ });
+}
 
-        
-            var html_c382eff6774e3ccfa6e01d408ba7df0b = $(`<div id="html_c382eff6774e3ccfa6e01d408ba7df0b" style="width: 100.0%; height: 100.0%;">Diergaarde Blijdorp (Zoo)</div>`)[0];
-            popup_02ee9c3d1202dfca73781bf3db5229a3.setContent(html_c382eff6774e3ccfa6e01d408ba7df0b);
-        
+// 🦁 Zoos & Tiere
+L.marker([51.928, 4.4489], {icon: icon('green','paw')})
+.addTo(map)
+.bindPopup("<b>Diergaarde Blijdorp (Rotterdam)</b><br>Großer, moderner Zoo mit viel Platz, Spielplätzen und Kinderwagen-freundlichen Wegen. Ideal für einen ganzen Tag.");
 
-        marker_14df51f78d89b74ee61308b04afac870.bindPopup(popup_02ee9c3d1202dfca73781bf3db5229a3)
-        ;
+// 🎡 Attraktionen & Erlebnisse
+L.marker([52.0981, 4.296], {icon: icon('orange','star')})
+.addTo(map)
+.bindPopup("<b>Madurodam (Den Haag)</b><br>Mini-Holland zum Staunen! Viele Knöpfe zum Mitmachen – perfekt auch für kleine Kinder.");
 
-        
-    
-    
-            var marker_205717ef88a023a515947046935bfb65 = L.marker(
-                [51.9208, 4.4818],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_3c7f00d9903c855fa3401a902354b048 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
-            );
-            marker_205717ef88a023a515947046935bfb65.setIcon(icon_3c7f00d9903c855fa3401a902354b048);
-        
-    
-        var popup_5e7e8b3ae9edfbb8d80046297c98394c = L.popup({"maxWidth": "100%"});
+// 🚤 Stadt & Entdecken
+L.marker([52.3731, 4.8922], {icon: icon('purple','ship')})
+.addTo(map)
+.bindPopup("<b>Grachtenfahrt Amsterdam</b><br>Entspannte Bootstour – Kinder können schauen, Eltern durchatmen. Auch mit Buggy gut machbar.");
 
-        
-            var html_ef88940acaccd279626538eed4080ad7 = $(`<div id="html_ef88940acaccd279626538eed4080ad7" style="width: 100.0%; height: 100.0%;">Markthal</div>`)[0];
-            popup_5e7e8b3ae9edfbb8d80046297c98394c.setContent(html_ef88940acaccd279626538eed4080ad7);
-        
+// 🍽️ Essen & Pausen
+L.marker([51.9208, 4.4818], {icon: icon('blue','cutlery')})
+.addTo(map)
+.bindPopup("<b>Markthal Rotterdam</b><br>Große Auswahl an Essen, viel Platz und spannend für Kinder durch Farben & Gerüche.");
 
-        marker_205717ef88a023a515947046935bfb65.bindPopup(popup_5e7e8b3ae9edfbb8d80046297c98394c)
-        ;
+L.marker([52.379, 4.9001], {icon: icon('blue','birthday-cake')})
+.addTo(map)
+.bindPopup("<b>Pancakes Amsterdam</b><br>Pfannkuchen gehen immer! Sehr kinderfreundlich, viele Varianten, kurze Wartezeiten.");
 
-        
-    
-    
-            var marker_648483b90d594d0eabfa9fde2315cff0 = L.marker(
-                [51.9007, 4.4821],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_4baeb756e579c2060e0437018eb27b64 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
-            );
-            marker_648483b90d594d0eabfa9fde2315cff0.setIcon(icon_4baeb756e579c2060e0437018eb27b64);
-        
-    
-        var popup_cf1c7bf0350ba2b1103cc54f7fc112fa = L.popup({"maxWidth": "100%"});
+L.marker([52.3667, 4.9147], {icon: icon('green','paw')})
+.addTo(map)
+.bindPopup("<b>Artis Zoo (Amsterdam)</b><br>Überschaubarer Zoo mitten in der Stadt – gut für kürzere Besuche mit kleinen Kindern.");
 
-        
-            var html_d43b0c1d835e73b6bac8a4aeb65e80ca = $(`<div id="html_d43b0c1d835e73b6bac8a4aeb65e80ca" style="width: 100.0%; height: 100.0%;">Fenix Food Factory</div>`)[0];
-            popup_cf1c7bf0350ba2b1103cc54f7fc112fa.setContent(html_d43b0c1d835e73b6bac8a4aeb65e80ca);
-        
+L.marker([52.1125, 4.275], {icon: icon('orange','sun-o')})
+.addTo(map)
+.bindPopup("<b>De Pier Scheveningen</b><br>Meer, Weite & viel zu sehen. Perfekt zum Spazieren, Eis essen und Toben.");
 
-        marker_648483b90d594d0eabfa9fde2315cff0.bindPopup(popup_cf1c7bf0350ba2b1103cc54f7fc112fa)
-        ;
-
-        
-    
-    
-            var marker_7770110ee478ad957a02230b483b607a = L.marker(
-                [51.9038, 4.4666],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_aa0628c6719b48351f8375e81e0490ed = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
-            );
-            marker_7770110ee478ad957a02230b483b607a.setIcon(icon_aa0628c6719b48351f8375e81e0490ed);
-        
-    
-        var popup_f7e573d7e666e773dd17c61609b6314b = L.popup({"maxWidth": "100%"});
-
-        
-            var html_402f144130c93952ee864dcf38a088d9 = $(`<div id="html_402f144130c93952ee864dcf38a088d9" style="width: 100.0%; height: 100.0%;">De Ballentent</div>`)[0];
-            popup_f7e573d7e666e773dd17c61609b6314b.setContent(html_402f144130c93952ee864dcf38a088d9);
-        
-
-        marker_7770110ee478ad957a02230b483b607a.bindPopup(popup_f7e573d7e666e773dd17c61609b6314b)
-        ;
-
-        
-    
-    
-            var marker_b13830940421cb98820303daf7678771 = L.marker(
-                [52.0981, 4.296],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_63ad5da5ae55d8996895952261484cae = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
-            );
-            marker_b13830940421cb98820303daf7678771.setIcon(icon_63ad5da5ae55d8996895952261484cae);
-        
-    
-        var popup_4caf124a204607a55e0fb9df616da160 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_97b968a8dc807ffa2662ea79cd2c042d = $(`<div id="html_97b968a8dc807ffa2662ea79cd2c042d" style="width: 100.0%; height: 100.0%;">Madurodam</div>`)[0];
-            popup_4caf124a204607a55e0fb9df616da160.setContent(html_97b968a8dc807ffa2662ea79cd2c042d);
-        
-
-        marker_b13830940421cb98820303daf7678771.bindPopup(popup_4caf124a204607a55e0fb9df616da160)
-        ;
-
-        
-    
-    
-            var marker_471436ce1578599abf060808c5d1e58e = L.marker(
-                [52.0796, 4.3245],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_9ec4c10e3057a5d4200d979589793877 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
-            );
-            marker_471436ce1578599abf060808c5d1e58e.setIcon(icon_9ec4c10e3057a5d4200d979589793877);
-        
-    
-        var popup_6df4b42c6667f8a6746c3191c6575d25 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_22b4c518efbeacb280a4117f7468fe2b = $(`<div id="html_22b4c518efbeacb280a4117f7468fe2b" style="width: 100.0%; height: 100.0%;">Hofhouse</div>`)[0];
-            popup_6df4b42c6667f8a6746c3191c6575d25.setContent(html_22b4c518efbeacb280a4117f7468fe2b);
-        
-
-        marker_471436ce1578599abf060808c5d1e58e.bindPopup(popup_6df4b42c6667f8a6746c3191c6575d25)
-        ;
-
-        
-    
-    
-            var marker_a818f3faeb44c88108fe23d59a8f548f = L.marker(
-                [52.104, 4.2728],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_c25b826ee0192710b6a6d3df03565a78 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
-            );
-            marker_a818f3faeb44c88108fe23d59a8f548f.setIcon(icon_c25b826ee0192710b6a6d3df03565a78);
-        
-    
-        var popup_9f0dee00d98a3b3ef0b0e323ccf9b3b2 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_4358187462661262cca2d683c0d82c3d = $(`<div id="html_4358187462661262cca2d683c0d82c3d" style="width: 100.0%; height: 100.0%;">Simonis aan Zee</div>`)[0];
-            popup_9f0dee00d98a3b3ef0b0e323ccf9b3b2.setContent(html_4358187462661262cca2d683c0d82c3d);
-        
-
-        marker_a818f3faeb44c88108fe23d59a8f548f.bindPopup(popup_9f0dee00d98a3b3ef0b0e323ccf9b3b2)
-        ;
-
-        
-    
-    
-            var marker_95a24622c8669f176b6ff42bee8f53a9 = L.marker(
-                [52.1125, 4.275],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_553677ed2b76bff416f5aa89bda2c9d1 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
-            );
-            marker_95a24622c8669f176b6ff42bee8f53a9.setIcon(icon_553677ed2b76bff416f5aa89bda2c9d1);
-        
-    
-        var popup_b3eaf0495e1c4db28083c597dede3c2a = L.popup({"maxWidth": "100%"});
-
-        
-            var html_7cc2148617cbbab88402cebdac0d41e7 = $(`<div id="html_7cc2148617cbbab88402cebdac0d41e7" style="width: 100.0%; height: 100.0%;">De Pier Scheveningen</div>`)[0];
-            popup_b3eaf0495e1c4db28083c597dede3c2a.setContent(html_7cc2148617cbbab88402cebdac0d41e7);
-        
-
-        marker_95a24622c8669f176b6ff42bee8f53a9.bindPopup(popup_b3eaf0495e1c4db28083c597dede3c2a)
-        ;
-
-        
-    
-    
-            var marker_f0b87d0070b642441d7b4d9f14f79680 = L.marker(
-                [52.3731, 4.8922],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_9796064d97076ef215f30a097f3a06bd = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
-            );
-            marker_f0b87d0070b642441d7b4d9f14f79680.setIcon(icon_9796064d97076ef215f30a097f3a06bd);
-        
-    
-        var popup_7ea6e496553422f64d56833805e9670e = L.popup({"maxWidth": "100%"});
-
-        
-            var html_d0b0df567c2b77192846b574d5747224 = $(`<div id="html_d0b0df567c2b77192846b574d5747224" style="width: 100.0%; height: 100.0%;">Grachtenfahrt (Zentrum)</div>`)[0];
-            popup_7ea6e496553422f64d56833805e9670e.setContent(html_d0b0df567c2b77192846b574d5747224);
-        
-
-        marker_f0b87d0070b642441d7b4d9f14f79680.bindPopup(popup_7ea6e496553422f64d56833805e9670e)
-        ;
-
-        
-    
-    
-            var marker_9d81307bb0d4ddd8f7ff1a995601f0ff = L.marker(
-                [52.379, 4.9001],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_3c8e8af5432e799e89792e3e5f54004f = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
-            );
-            marker_9d81307bb0d4ddd8f7ff1a995601f0ff.setIcon(icon_3c8e8af5432e799e89792e3e5f54004f);
-        
-    
-        var popup_86ee59cc634fc583329d3ae89204738a = L.popup({"maxWidth": "100%"});
-
-        
-            var html_04df781be177571cd7d6d6ce62a3eff0 = $(`<div id="html_04df781be177571cd7d6d6ce62a3eff0" style="width: 100.0%; height: 100.0%;">Pancakes Amsterdam</div>`)[0];
-            popup_86ee59cc634fc583329d3ae89204738a.setContent(html_04df781be177571cd7d6d6ce62a3eff0);
-        
-
-        marker_9d81307bb0d4ddd8f7ff1a995601f0ff.bindPopup(popup_86ee59cc634fc583329d3ae89204738a)
-        ;
-
-        
-    
-    
-            var marker_fd845717b17bafc59b8e921f3a7ec0bd = L.marker(
-                [52.3667, 4.9147],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_e64435cf7c1175a1449e24ad778d8ffc = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
-            );
-            marker_fd845717b17bafc59b8e921f3a7ec0bd.setIcon(icon_e64435cf7c1175a1449e24ad778d8ffc);
-        
-    
-        var popup_1a47ba31086419b5ee495465551f248e = L.popup({"maxWidth": "100%"});
-
-        
-            var html_a50a0ec1bb7c46334926a66965445a47 = $(`<div id="html_a50a0ec1bb7c46334926a66965445a47" style="width: 100.0%; height: 100.0%;">Artis Zoo</div>`)[0];
-            popup_1a47ba31086419b5ee495465551f248e.setContent(html_a50a0ec1bb7c46334926a66965445a47);
-        
-
-        marker_fd845717b17bafc59b8e921f3a7ec0bd.bindPopup(popup_1a47ba31086419b5ee495465551f248e)
-        ;
-
-        
-    
-    
-            var marker_ddf175be7992dfe68bb35cf97a7bd1bf = L.marker(
-                [52.3702, 4.868],
-                {}
-            ).addTo(map_d634f5ff64d19232c4e28a6a1b4cace8);
-        
-    
-            var icon_6dd64edbbc10f35be2fed7a6186bb118 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
-            );
-            marker_ddf175be7992dfe68bb35cf97a7bd1bf.setIcon(icon_6dd64edbbc10f35be2fed7a6186bb118);
-        
-    
-        var popup_e9efec898ea963fe2270c1597922f682 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_46e4c630262a1c311110fe21a4d6f388 = $(`<div id="html_46e4c630262a1c311110fe21a4d6f388" style="width: 100.0%; height: 100.0%;">Foodhallen</div>`)[0];
-            popup_e9efec898ea963fe2270c1597922f682.setContent(html_46e4c630262a1c311110fe21a4d6f388);
-        
-
-        marker_ddf175be7992dfe68bb35cf97a7bd1bf.bindPopup(popup_e9efec898ea963fe2270c1597922f682)
-        ;
-
-        
-    
 </script>
+</body>
 </html>
